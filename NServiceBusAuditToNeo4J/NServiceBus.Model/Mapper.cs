@@ -44,7 +44,7 @@
 
         private static Endpoint Map(Data.Endpoint dataEndpoint)
         {
-            return new Endpoint { Name = dataEndpoint.Name };
+            return dataEndpoint != null ? new Endpoint {Name = dataEndpoint.Name} : null;
         }
 
         private string GetContext(Data.ProcessedMessage dataMessage)

@@ -6,8 +6,8 @@ namespace ModelBuilder
 
     public class Model
     {
-        private readonly ConcurrentDictionary<Guid, InterimMessage> interimMessages =
-            new ConcurrentDictionary<Guid, InterimMessage>();
+        private readonly ConcurrentDictionary<string, InterimMessage> interimMessages =
+            new ConcurrentDictionary<string, InterimMessage>();
 
         private readonly ConcurrentDictionary<string, Message> messages = new ConcurrentDictionary<string, Message>();
 
@@ -42,20 +42,20 @@ namespace ModelBuilder
 
         internal void Compact()
         {
-            foreach (KeyValuePair<Guid, InterimMessage> message in interimMessages)
+            foreach (KeyValuePair<string, InterimMessage> message in interimMessages)
             {
                 var messageNode = GetMessage(message.Value.Type);
                 messageNode.Intent = message.Value.Intent;
 
                 InterimMessage relatedMessage;
-                if (interimMessages.TryGetValue(message.Value.RelatedTo, out relatedMessage))
+                if (!string.IsNullOrEmpty(message.Value.RelatedTo) && interimMessages.TryGetValue(message.Value.RelatedTo, out relatedMessage))
                 {
                     messageNode.AddRelatedTo(relatedMessage.Type);
                 }
             }
         }
 
-        internal InterimMessage GetInterimMessage(Guid messageId)
+        internal InterimMessage GetInterimMessage(string messageId)
         {
             return interimMessages.GetOrAdd(messageId, id => new InterimMessage());
         }

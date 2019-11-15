@@ -8,6 +8,6 @@ namespace ModelBuilder
 
         public string Intent { get; set; }
 
-        public Guid RelatedTo { get; set; }
+        public string RelatedTo { get; set; }
     }
 }

@@ -34,10 +34,7 @@ namespace ModelBuilder
             message.Type = processedMessage.MessageType;
             message.Intent = processedMessage.MessageIntent;
 
-            if (processedMessage.RelatedTo.HasValue)
-            {
-                message.RelatedTo = processedMessage.RelatedTo.Value;
-            }
+            message.RelatedTo = processedMessage.RelatedTo;
 
             return message;
         }

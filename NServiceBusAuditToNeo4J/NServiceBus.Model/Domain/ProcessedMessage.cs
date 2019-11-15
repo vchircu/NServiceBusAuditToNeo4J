@@ -4,7 +4,7 @@
 
     public class ProcessedMessage
     {
-        public Guid MessageId { get; set; }
+        public string MessageId { get; set; }
 
         public string MessageType { get; set; }
 
@@ -14,7 +14,7 @@
 
         public Endpoint ReceivingEndpoint { get; set; }
 
-        public Guid? RelatedTo { get; set; }
+        public string RelatedTo { get; set; }
 
         public Endpoint SendingEndpoint { get; set; }
 
