@@ -21,8 +21,11 @@ namespace ModelBuilder
             var receivingEndpoint = model.GetEndpoint(processedMessage.ReceivingEndpoint.Name);
             receivingEndpoint.Receives(message);
 
-            var context = model.GetContext(processedMessage.Context);
-            context.Contains(message);
+            if (!string.IsNullOrEmpty(processedMessage.Context))
+            {
+                var context = model.GetContext(processedMessage.Context);
+                context.Contains(message);
+            }
         }
 
         private InterimMessage GetInterimMessage(ProcessedMessage processedMessage)
@@ -47,12 +50,6 @@ namespace ModelBuilder
 
         private static bool CanAccept(ProcessedMessage message)
         {
-            if (string.IsNullOrEmpty(message.Context))
-            {
-                // TODO check what messages do not contain the context
-                return false;
-            }
-
             if (message.IsSystemMessage)
             {
                 return false;
